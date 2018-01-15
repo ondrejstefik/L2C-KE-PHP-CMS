@@ -1,6 +1,36 @@
 <?php
-
+require_once  dirname(__FILE__).'/../framework/loggedin.php';
 require_once  dirname(__FILE__).'/../framework/helpers.php';
+
+if(!empty($_POST)){ //operacie nad pouzivatelom
+	if(!empty($_POST["action"])){
+		switch ($_POST["action"]) {
+			case "insert":
+			if(!empty($_POST["title"]) && !empty($_POST["menu_label"]) && !empty($_POST["content"])&& !empty($_POST["user_id"])){
+				$query = "INSERT INTO Pages(title, menu_label, content,User_ID) VALUES('".$_POST["title"]."','".$_POST["menu_label"]."','".$_POST["content"]."','".$_POST["user_id"]."')";
+				db_query($query);
+			}
+				break;
+			case "update":
+			if(!empty($_POST["id"])){
+				if(!empty($_POST["title"]) && !empty($_POST["menu_label"])&&!empty($_POST["content"])&& !empty($_POST["user_id"])){
+			$query = "UPDATE Pages SET title='".$_POST["title"]."', menu_label='".$_POST["menu_label"]."', content='".$_POST["content"]."', User_ID='".$_POST["user_id"]."' WHERE ID =".$_POST["id"];
+			db_query($query);
+				}
+			}
+			
+				break;
+			case "delete":
+			if(!empty($_POST["id"])){
+				$query = "DELETE FROM Pages WHERE ID =".$_POST["id"];
+		db_query($query);
+			}
+				break;
+			default:
+				break;
+		}
+	}
+}
 $result=db_query("SELECT * FROM Pages");
 
 
@@ -85,7 +115,7 @@ $result=db_query("SELECT * FROM Pages");
 				<div class="col-sm-12 col-md-12 main">
 
 					<h1 class="page-header">Pages</h1>
-
+<a href="page.php">Add new page</a>
 					<div class="table-responsive">
 
 						<table class="table table-striped">

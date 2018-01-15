@@ -1,3 +1,9 @@
+<?php 
+require_once  dirname(__FILE__).'/../framework/loggedin.php';
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="en">

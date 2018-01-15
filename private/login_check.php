@@ -5,7 +5,9 @@ $data= db_query("SELECT * FROM Users WHERE Email = '".$_POST ['email']."'");
 if($data!=false){
 $user=mysqli_fetch_object($data);
 if($user->password==$_POST['password']){
-echo $user->Email;
+session_start();
+$_SESSION["Email"]=$user->email;
+header("Location: index.php");
 }
 }
     }

@@ -1,6 +1,35 @@
 <?php
-
+require_once  dirname(__FILE__).'/../framework/loggedin.php';
 require_once  dirname(__FILE__).'/../framework/helpers.php';
+if(!empty($_POST)){ //operacie nad pouzivatelom
+	if(!empty($_POST["action"])){
+		switch ($_POST["action"]) {
+			case "insert":
+			if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["nickname"])){
+				$query = "INSERT INTO Users(Email, password, nickname) VALUES('".$_POST["email"]."','".$_POST["password"]."','".$_POST["nickname"]."')";
+				db_query($query);
+			}
+				break;
+			case "update":
+			if(!empty($_POST["id"])){
+				if(!empty($_POST["email"]) && !empty($_POST["nickname"])){
+			$query = "UPDATE Users SET Email='".$_POST["email"]."', nickname='".$_POST["nickname"]."' WHERE ID =".$_POST["id"];
+			db_query($query);
+				}
+			}
+			
+				break;
+			case "delete":
+			if(!empty($_POST["id"])){
+				$query = "DELETE FROM Users WHERE ID =".$_POST["id"];
+		db_query($query);
+			}
+				break;
+			default:
+				break;
+		}
+	}
+}
 $result=db_query("SELECT * FROM Users");
 
 
@@ -85,7 +114,7 @@ $result=db_query("SELECT * FROM Users");
 				<div class="col-sm-12 col-md-12 main">
 
 					<h1 class="page-header">Users</h1>
-
+<a href="user.php">Add new user</a>
 					<div class="table-responsive">
 
 						<table class="table table-striped">
